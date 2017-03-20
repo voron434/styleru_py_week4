@@ -5,35 +5,34 @@ import json
 import time
 import os
 
-
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
 
 
 def error_healing(error_code):
     if error_code == 1:
-        return 'Произошла неизвестная ошибка'
+        return 'РџСЂРѕРёР·РѕС€Р»Р° РЅРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°'
     if error_code == 2:
-        return 'Сорян, админ все повыключал'
+        return 'РЎРѕСЂСЏРЅ, Р°РґРјРёРЅ РІСЃРµ РїРѕРІС‹РєР»СЋС‡Р°Р»'
     if error_code == 5:
-        return 'Авторизация не удалась'
+        return 'РђРІС‚РѕСЂРёР·Р°С†РёСЏ РЅРµ СѓРґР°Р»Р°СЃСЊ'
     if error_code == 6:
         time.sleep(2)
         return None
     if error_code == 9:
-        return 'Слишком много однотипных действий'
+        return 'РЎР»РёС€РєРѕРј РјРЅРѕРіРѕ РѕРґРЅРѕС‚РёРїРЅС‹С… РґРµР№СЃС‚РІРёР№'
     if error_code == 14:
-        return 'Прости, вылезла капча. Попробуй перезайти'
+        return 'РџСЂРѕСЃС‚Рё, РІС‹Р»РµР·Р»Р° РєР°РїС‡Р°. РџРѕРїСЂРѕР±СѓР№ РїРµСЂРµР·Р°Р№С‚Рё'
     if error_code == 15:
-        return 'Этот юзер спрятался от меня'
+        return 'Р­С‚РѕС‚ СЋР·РµСЂ СЃРїСЂСЏС‚Р°Р»СЃСЏ РѕС‚ РјРµРЅСЏ'
     if error_code == 17:
-        return 'Так исторически сложилось, что тебе придется войти'
+        return 'РўР°Рє РёСЃС‚РѕСЂРёС‡РµСЃРєРё СЃР»РѕР¶РёР»РѕСЃСЊ, С‡С‚Рѕ С‚РµР±Рµ РїСЂРёРґРµС‚СЃСЏ РІРѕР№С‚Рё'
     if error_code == 18:
-        return 'Эта страничка удалена, у нее нет друзей'
+        return 'Р­С‚Р° СЃС‚СЂР°РЅРёС‡РєР° СѓРґР°Р»РµРЅР°, Сѓ РЅРµРµ РЅРµС‚ РґСЂСѓР·РµР№'
     if error_code == 113:
-        return 'Прости, но ты ввел что-то не так, как я ожидаю'
+        return 'РџСЂРѕСЃС‚Рё, РЅРѕ С‚С‹ РІРІРµР» С‡С‚Рѕ-С‚Рѕ РЅРµ С‚Р°Рє, РєР°Рє СЏ РѕР¶РёРґР°СЋ'
     if error_code == 1000:
-        return 'Нет, сначала положи что-нибудь в форму!'
+        return 'РќРµС‚, СЃРЅР°С‡Р°Р»Р° РїРѕР»РѕР¶Рё С‡С‚Рѕ-РЅРёР±СѓРґСЊ РІ С„РѕСЂРјСѓ!'
 
 
 def form_url(redirect_uri):
@@ -112,8 +111,9 @@ def index():
             error_healing(friend_info['error']['error_code'])
             friend_info = get_user_info(token, friend_id)
         friends_info_mobile.append(friend_info)
-    params['online_friends_mobile'] = friends_info_mobile['response'][0]
-    params['online_friends_pc'] = friends_info_pc['response'][0]
+    params['online_friends_mobile'] = friends_info_mobile
+    params['online_friends_pc'] = friends_info_pc
+    params.pop('online_friends', None)
     return render_template('index.html', **params)
 
 
