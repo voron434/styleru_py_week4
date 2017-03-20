@@ -141,4 +141,4 @@ def getpas():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('access_token',None)
-    return redirect('index')
+    return redirect('/index')
