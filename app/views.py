@@ -53,18 +53,23 @@ def form_url(CLIENT_ID, redirect_uri):
 
 
 def get_users_info(token, list_of_users_ids):
-    params = {'user_ids': list_of_users_ids,
-              'access_token': token,
-              }
     url = 'https://api.vk.com/method/users.get'
-    request = json.loads(requests.get(url, params).text)
-    return request
+    users_info = []
+    for id in list_of_users_ids:
+        params = {'user_ids': id,
+                'access_token': token,
+                }
+        request = json.loads(requests.get(url, params).text)
+        if 'error' in request:
+            params['error'] = error_healing(online_friends_ids['error']['error_code'])
+            request = json.loads(requests.get(url, params).text)
+        users_info.append(request)
+    return users_info
 
 
 def get_online_friends_ids(short_name, token):
     if not short_name:
         return {'error': {'error_code': 1000}}
-
     user_info = get_users_info(token, short_name)
     if 'error' in user_info:
         return user_info
@@ -110,8 +115,8 @@ def index():
         params['error'] = error_healing(telephone_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
     
-    params['online_friends_mobile'] = telephone_online_friends_info['response'][0]
-    params['online_friends_pc'] = pc_online_friends_info['response'][0]
+    params['online_friends_mobile'] = telephone_online_friends_info['response']
+    params['online_friends_pc'] = pc_online_friends_info['response']
     return render_template('index.html', **params)
 
 
