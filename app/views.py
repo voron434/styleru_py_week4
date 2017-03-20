@@ -6,6 +6,10 @@ import time
 import os
 
 
+CLIENT_ID = os.environ['CLIENT_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
+
+
 def error_healing(error_code):
     if error_code == 1:
         return 'Произошла неизвестная ошибка'
