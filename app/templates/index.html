@@ -25,6 +25,8 @@
     <center><a align="center" href={{ auth_url }}><button>Войти</button></a></center>
     {% endif %}
 
+    {{ test }}
+    
     {% if logged_in %}
     <center><a href={{ logout_url }}><button>Выйти</button></a></center>
       {% if error %}
