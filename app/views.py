@@ -104,7 +104,7 @@ def index():
     if 'error' in online_friends_ids:
         params['error'] = error_healing(online_friends_ids['error']['error_code'])
         return render_template('index.html', **params)
-    online_friends_ids = online_friends_ids['response']
+    online_friends_ids = online_friends_ids['response'][0]
     pc_online_friends_info = get_friends_info(token, online_friends_ids['online'])
     telephone_online_friends_info =get_friends_info(token, online_friends_ids['online_mobile'])
     if 'error' in pc_online_friends_info:
