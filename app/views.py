@@ -63,7 +63,7 @@ def get_users_info(token, list_of_users_ids):
         if 'error' in request:
             params['error'] = error_healing(online_friends_ids['error']['error_code'])
             request = json.loads(requests.get(url, params).text)
-        users_info.append(request)
+        users_info.append(request['response'][0])
     return users_info
 
 
@@ -74,7 +74,7 @@ def get_online_friends_ids(short_name, token):
     if 'error' in user_info:
         return user_info
     url = 'https://api.vk.com/method/friends.getOnline'
-    params = {'user_id': user_info['response'][0]['uid'],
+    params = {'user_id': user_info['uid'],
               'access_token': token,
               'order': 'hints',
               'count': 5000,  # vk won't return more
@@ -100,23 +100,10 @@ def index():
     token = session['access_token']
     
     online_friends_ids = get_online_friends_ids(short_name, token)
-    if 'error' in online_friends_ids:
-        params['error'] = error_healing(online_friends_ids['error']['error_code'])
-        return render_template('index.html', **params)
-    online_friends_ids = online_friends_ids['response']
-    
     pc_online_friends_info = get_users_info(token, online_friends_ids['online'])
-    if 'error' in pc_online_friends_info:
-        params['error'] = error_healing(pc_online_friends_info['error']['error_code'])
-        return render_template('index.html', **params)
-    
     telephone_online_friends_info =get_users_info(token, online_friends_ids['online_mobile'])
-    if 'error' in telephone_online_friends_info:
-        params['error'] = error_healing(telephone_online_friends_info['error']['error_code'])
-        return render_template('index.html', **params)
-    
-    params['online_friends_mobile'] = telephone_online_friends_info['response']
-    params['online_friends_pc'] = pc_online_friends_info['response']
+    params['online_friends_mobile'] = telephone_online_friends_info
+    params['online_friends_pc'] = pc_online_friends_info
     return render_template('index.html', **params)
 
 
