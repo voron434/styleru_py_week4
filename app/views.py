@@ -53,10 +53,7 @@ def form_url(CLIENT_ID, redirect_uri):
 
 
 def get_users_info(token, list_of_users_ids):
-    list_of_users_ids_str = ''
-    for id in list_of_users_ids:
-        list_of_users_ids_str=list_of_users_ids_str +','+id
-    params = {'user_ids': list_of_users_ids_str,
+    params = {'user_ids': list_of_users_ids,
               'access_token': token,
               }
     url = 'https://api.vk.com/method/users.get'
