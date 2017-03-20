@@ -104,13 +104,13 @@ def index():
     if 'error' in online_friends_ids:
         params['error'] = error_healing(online_friends_ids['error']['error_code'])
         return render_template('index.html', **params)
-    online_friends_ids = online_friends_ids['response'][0]
+    online_friends_ids = online_friends_ids['response']
     pc_online_friends_info = get_friends_info(token, online_friends_ids['online'])
     telephone_online_friends_info =get_friends_info(token, online_friends_ids['online_mobile'])
     if 'error' in pc_online_friends_info:
         params['error'] = error_healing(pc_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
-    if 'error in telephone_online_friends_info:
+    if 'error' in telephone_online_friends_info:
         params['error'] = error_healing(telephone_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
     params['online_friends_mobile'] = telephone_online_friends_info
