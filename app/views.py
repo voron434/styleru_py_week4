@@ -1,6 +1,8 @@
 from flask import render_template, flash, redirect, request, session
 from app import app
 from vk_helpers import error_healing,form_url,get_user_info,get_online_friends_ids
+import requests
+import json
 import os
 
 CLIENT_ID = os.environ['CLIENT_ID']
