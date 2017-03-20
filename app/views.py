@@ -3,10 +3,10 @@ from app import app
 import requests
 import json
 import time
+import os
 
-
-CLIENT_ID = '///'
-CLIENT_SECRET = '///'
+CLIENT_ID = os.environ['CLIENT_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
 
 
 def error_healing(error_code):
