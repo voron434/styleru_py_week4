@@ -83,7 +83,7 @@ def get_online_friends_ids(short_name, token):
 def get_friends_info(token, list_of_friends_ids)
     friends_info = get_users_info(token, list_of_friends_ids)
     if 'error' in friends_info:
-        friends_info = error_healing(friend_info['error']['error_code'])
+        friends_info = error_healing(friends_info['error']['error_code'])
     return friends_info
 
 
