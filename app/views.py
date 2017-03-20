@@ -1,5 +1,6 @@
 from flask import render_template, flash, redirect, request, session
 from app import app
+import vk_helpers
 import requests
 import json
 import time
