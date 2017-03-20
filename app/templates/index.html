@@ -1,7 +1,8 @@
 <html>
   <head>
     <style type="text/css">
-    html{
+    html
+    {
     background: repeat-y #d5dde5;
     font-size: 100%;
     font-family: Comic Sans, sans-serif;
@@ -25,23 +26,21 @@
     <center><a align="center" href={{ auth_url }}><button>Войти</button></a></center>
     {% endif %}
 
-    {{ test }}
-    
     {% if logged_in %}
     <center><a href={{ logout_url }}><button>Выйти</button></a></center>
       {% if error %}
         <p>{{ error }}</p>
       {% else %}
     <div>
-    <h2>C телефона:</h2>
+    <h2 id="Phone">C телефона сидят:</h2>
     {% for friend in online_friends_mobile %}
-      <p> <a href="https://vk.com/id{{ friend['uid'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a></p>
+      <p> <a href="https://vk.com/id{{ friend['response'][0]['uid'] }}">{{ friend['response'][0]['first_name'] }} {{ friend['response'][0]['last_name'] }}</a></p>
     {% endfor %}
     </div>
     <div>
-    <h2>С компьютера:</h2>
+    <h2 id="h2">С компьютера:</h2>
     {% for friend in online_friends_pc %}
-      <p><a href="https://vk.com/id{{ friend['uid'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a></p>
+      <p><a href="https://vk.com/id{{ friend['response'][0]['uid'] }}">{{ friend['response'][0]['first_name'] }} {{ friend['response'][0]['last_name'] }}</a></p>
     {% endfor %}
     </div>
     {% endif %}
