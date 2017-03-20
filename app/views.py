@@ -110,9 +110,8 @@ def index():
         params['error'] = error_healing(telephone_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
     
-    params['online_friends_mobile'] = telephone_online_friends_info['response']
-    params['online_friends_pc'] = pc_online_friends_info['response']
-    params.pop('online_friends', None)
+    params['online_friends_mobile'] = telephone_online_friends_info['response'][0]
+    params['online_friends_pc'] = pc_online_friends_info['response'][0]
     return render_template('index.html', **params)
 
 
