@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <style type="text/css">
+    html
+    {
+    background: repeat-y #d5dde5;
+    font-size: 100%;
+    font-family: Comic Sans, sans-serif;
+    }
+    #label {
+    font-size: 80%
+    }
+    a{text-decoration: none; color: #4169E1;}
+    </style>
+    <title>Check your friends Online</title>
+  </head>
+  <center>
+    <h1 style='text-align: center'> Check your friends Online</h1>
+    {{ online_friends }}
+    <h3 align="center" >На этом сайте ты можешь написать id любого аккаунта от vk.com и мы покажем тебе кто из его друзей онлайн!</h3>
+
+    <p id="label" align="middle">Вводи id любого человека из вк. Id - это все справа от последнего слэша на его страничке.</p>
+    <form action="/index" method="GET" align="center"><input name="text"><input type="submit" value="Найти"></form>
+
+    {% if not logged_in %}
+    <center><a align="center" href={{ auth_url }}><button>Войти</button></a></center>
+    {% endif %}
+
+    {% if logged_in %}
+    <center><a href={{ logout_url }}><button>Выйти</button></a></center>
+      {% if error %}
+        <p>{{ error }}</p>
+      {% else %}
+    <div>
+    <h2 id="Phone">C телефона сидят:</h2>
+    {% for friend in online_friends_mobile %}
+      <p> <a href="https://vk.com/id{{ friend['response'][0]['uid'] }}">{{ friend['response'][0]['first_name'] }} {{ friend['response'][0]['last_name'] }}</a></p>
+    {% endfor %}
+    </div>
+    <div>
+    <h2 id="h2">С компьютера:</h2>
+    {% for friend in online_friends_pc %}
+      <p><a href="https://vk.com/id{{ friend['response'][0]['uid'] }}">{{ friend['response'][0]['first_name'] }} {{ friend['response'][0]['last_name'] }}</a></p>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+  {% endif %}
+  </body>
+</html>
