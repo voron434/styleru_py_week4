@@ -53,7 +53,10 @@ def form_url(CLIENT_ID, redirect_uri):
 
 
 def get_users_info(token, list_of_users_ids):
-    params = {'user_ids': list_of_users_ids,
+    list_of_users_ids_str = ''
+    for id in list_of_users_ids:
+        list_of_users_ids_str=list_of_users_ids_str +','+id
+    params = {'user_ids': list_of_users_ids_str,
               'access_token': token,
               }
     url = 'https://api.vk.com/method/users.get'
@@ -104,9 +107,6 @@ def index():
     if 'error' in pc_online_friends_info:
         params['error'] = error_healing(pc_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
-    
-    params['test'] = pc_online_friends_info
-    return render_template('index.html', **params)
 
     telephone_online_friends_info =get_users_info(token, online_friends_ids['online_mobile'])
     if 'error' in telephone_online_friends_info:
