@@ -1,8 +1,7 @@
 <html>
   <head>
     <style type="text/css">
-    html
-    {
+    html{
     background: repeat-y #d5dde5;
     font-size: 100%;
     font-family: Comic Sans, sans-serif;
@@ -32,13 +31,13 @@
         <p>{{ error }}</p>
       {% else %}
     <div>
-    <h2 id="Phone">C телефона сидят:</h2>
+    <h2>C телефона:</h2>
     {% for friend in online_friends_mobile %}
       <p> <a href="https://vk.com/id{{ friend['uid'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a></p>
     {% endfor %}
     </div>
     <div>
-    <h2 id="h2">С компьютера:</h2>
+    <h2>С компьютера:</h2>
     {% for friend in online_friends_pc %}
       <p><a href="https://vk.com/id{{ friend['uid'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a></p>
     {% endfor %}
