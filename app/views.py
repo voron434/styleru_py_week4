@@ -112,9 +112,8 @@ def index():
             error_healing(friend_info['error']['error_code'])
             friend_info = get_user_info(token, friend_id)
         friends_info_mobile.append(friend_info)
-    params['online_friends_mobile'] = friends_info_mobile
-    params['online_friends_pc'] = friends_info_pc
-    params.pop('online_friends', None)
+    params['online_friends_mobile'] = friends_info_mobile['response'][0]
+    params['online_friends_pc'] = friends_info_pc['response'][0]
     return render_template('index.html', **params)
 
 
