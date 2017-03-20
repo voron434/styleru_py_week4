@@ -80,11 +80,6 @@ def get_online_friends_ids(short_name, token):
     return vk_friends_online
 
 
-def get_friends_info(token, list_of_friends_ids):
-    friends_info = get_users_info(token, list_of_friends_ids)
-    return friends_info
-
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -98,19 +93,23 @@ def index():
         return render_template('index.html', **params)
     params['logged_in'] = True
     token = session['access_token']
+    
     online_friends_ids = get_online_friends_ids(short_name, token)
     if 'error' in online_friends_ids:
         params['error'] = error_healing(online_friends_ids['error']['error_code'])
         return render_template('index.html', **params)
-    online_friends_ids = online_friends_ids['response']
-    pc_online_friends_info = get_friends_info(token, online_friends_ids['online'])
-    telephone_online_friends_info =get_friends_info(token, online_friends_ids['online_mobile'])
+    online_friends_ids = online_friends_ids['response'][0]
+    
+    pc_online_friends_info = get_users_info(token, online_friends_ids['online'])
     if 'error' in pc_online_friends_info:
         params['error'] = error_healing(pc_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
+    
+    telephone_online_friends_info =get_users_info(token, online_friends_ids['online_mobile'])
     if 'error' in telephone_online_friends_info:
         params['error'] = error_healing(telephone_online_friends_info['error']['error_code'])
         return render_template('index.html', **params)
+    
     params['online_friends_mobile'] = telephone_online_friends_info['response'][0]
     params['online_friends_pc'] = pc_online_friends_info['response'][0]
     params.pop('online_friends', None)
