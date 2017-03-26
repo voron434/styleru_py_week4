@@ -7,6 +7,20 @@ from . import vk_helpers
 
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
+SECRET_KEY = os.environ['SECRET_KEY']
+
+@app.before_request
+def csrf_protect():
+    if request.method == "POST":
+        token = session.pop('_csrf_token', None)
+        if not token or token != request.form.get('_csrf_token'):
+            raise 404
+
+
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = SECRET_KEY
+    return session['_csrf_token']
 
 
 def is_error_there(response, **params):
@@ -22,11 +36,12 @@ def is_error_there(response, **params):
 def index():
     params = {'logged_in': False,
               'auth_url': vk_helpers.form_url(CLIENT_ID, request.url_root + 'getpas'),
-              'logout_url': '/logout'
+              'logout_url': '/logout',
+              'csrf_token': generate_csrf_token()
               }
     short_name = request.args.get('text', '')
     if 'access_token' not in session:
-        return render_template('index.html', **params)
+        token = None
     else:
         params['logged_in'] = True
         token = session['access_token']
