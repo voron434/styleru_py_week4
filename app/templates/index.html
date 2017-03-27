@@ -54,7 +54,7 @@
         <h2 id="h2">Друзья онлайн:</h2>
         {% for friend in online_friends %}
           <p>
-            <a href="https://vk.com/id{{ friend['id'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a>
+            <a href="https://vk.com/id{{ friend['id'] }}">{{ friend['first_name'] }} {{ friend['last_name'] }}</a> {% if friend['online_mobile'] %} мобильный {% else %} компьютер {% endif %}
           </p>
         {% endfor %}
       </fieldset>
