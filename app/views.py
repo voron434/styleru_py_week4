@@ -47,7 +47,8 @@ def index():
         token = session['access_token']
 
     online_friends_ids = vk_helpers.get_all_friends_ids(short_name, token)
-    if is_error_there(online_friends_ids, **params):
+    if 'error' in online_friends_ids:
+        params['error'] = vk_helpers.show_error(online_friends_ids['error']['error_code'])
         return render_template('index.html', **params)
     else:
         online_friends_ids = online_friends_ids['response']['items']
