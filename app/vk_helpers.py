@@ -27,6 +27,8 @@ def show_error(error_code):
         return 'Прости, но ты ввел что-то не так, как я ожидаю'
     elif error_code == 1000:
         return 'Нет, сначала положи что-нибудь в форму!'
+    elif error_code == 1001:
+        return 'Отрицательных id не бывает'
     else:
         return 'Тебе повезло! Ты нашел новую ошибку!'
 
@@ -57,12 +59,14 @@ def get_user_info(token, short_name):
 def get_all_friends_ids(short_name, token):
     if not short_name:
         return {'error': {'error_code': 1000}}
-
     user_info = get_user_info(token, short_name)
     if 'error' in user_info:
         return user_info
+    if user_info == {'response': []}:
+        return {'error': {'error_code': 1001}}
+    user_id = user_info['response'][0]['uid']
     url = 'https://api.vk.com/method/friends.get'
-    params = {'user_id': user_info['response'][0]['uid'],
+    params = {'user_id': user_id,
               'access_token': token,
               'order': 'hints',
               'count': 5000,  # vk won't return more
